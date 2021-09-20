@@ -214,7 +214,7 @@ div .mission-icon
 		font-size: calc((6.2 - 1) * 1.2vw + 1rem);
 	}
 
-	div.hide-in-portrait
+	.hide-in-portrait
 	{
 		display: none;
 	}
