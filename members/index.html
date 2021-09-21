@@ -2,7 +2,12 @@
 <html>
 <head>
 	<title>ITSHETSENG SACCOS - Members</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,700;0,800;1,500;1,700">
+	<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="resources/fonts/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="resources/style.css">
 </head>
 <body>
@@ -15,10 +20,146 @@
 	</header>
 	<main>
 		<div id="left-menu">			
-			<div id="left-menu-name">
-				Robert Akanyang
+			<div id="left-menu-items">
+				<div class="item selected">
+					<div class="hot"></div>
+					<div class="icon">
+						<i class="lnr lnr-chart-bars"></i>
+					</div>
+					Dashboard
+				</div>
+				<div class="item">
+					<div class="hot"></div>
+					<div class="icon">
+						<i class="lnr lnr-enter"></i>
+					</div>
+					Savings
+				</div>
+				<div class="item">
+					<div class="hot"></div>
+					<div class="icon">
+						<i class="lnr lnr-layers"></i>
+					</div>
+					Funeral Scheme
+				</div>
+				<div class="item">
+					<div class="hot"></div>
+					<div class="icon">
+						<i class="lnr lnr-exit"></i>
+					</div>
+					Loans
+				</div>
+				<div class="sep"></div>
+				<div class="item">
+					<div class="hot"></div>
+					<div class="icon">
+						<i class="lnr lnr-cog"></i>
+					</div>
+					Settings
+				</div>
 			</div>			
-		</div>			
+		</div>
+		<div id="main-panel">
+			<div class="title">
+				Dashboard
+			</div>			
+			<div class="dashboard-container">
+				<div class="dashboard-column">
+					<div class="dashboard-panel">
+						<div class="dotted-border manage-deposits">						
+							<div class="note">
+								<img src="resources/_deposit.png" />
+							</div>
+							<div class="text">
+								Create a monthly subscription, or make one off deposits.
+							</div>
+							<div class="centered">
+								<a class="btn" href="#">Manage Deposits</a>
+							</div>						
+						</div>
+					</div>	
+				</div>	
+				<div class="dashboard-column">
+					<div class="dashboard-panel">
+						<div class="balance">
+							<div class="panel-title">Current Balance</div>
+							<div class="balance-value">P 2500</div>
+						</div>
+					</div>	
+					<div class="dashboard-panel">
+						<div class="panel-title">Account Stats</div>
+						<div class="panel-spacer"></div>
+						<div class="info-container">
+							<div class="info-title">Total Deposited</div>
+							<div class="info-value">P 1000</div>
+						</div>
+						<div class="info-container">
+							<div class="info-title">Total Withdrawn</div>
+							<div class="info-value">P 2500</div>
+						</div>
+						<div class="info-container">
+							<div class="info-title">Total Owed</div>
+							<div class="info-value">P 3000</div>
+						</div>
+						<div class="btn-link-container">
+							<a href="#" class="btn-link">View More</a>
+						</div>
+					</div>	
+					<div class="dashboard-panel">
+						<div class="balance">
+							<div class="panel-title">Credit Score</div>
+							<div class="balance-value">300</div>
+						</div>
+						<div class="btn-link-container">
+							<a href="#" class="btn-link">Learn More</a>
+						</div>						
+					</div>	
+				</div>	
+				<div class="dashboard-column">
+					<div class="dashboard-panel">
+						<div class="panel-title">Recent Transactions</div>
+						<div class="panel-spacer"></div>
+						<div class="info-container">
+							<div class="info-title">15/09/2021</div>
+							<div class="info-value">- P 1000</div>
+						</div>
+						<div class="info-container">
+							<div class="info-title">28/08/2021</div>
+							<div class="info-value">+ P 3000</div>
+						</div>
+						<div class="info-container">
+							<div class="info-title">28/07/2021</div>
+							<div class="info-value">+ P 3000</div>
+						</div>
+						<div class="btn-link-container">
+							<a href="#" class="btn-link">View All</a>
+						</div>						
+					</div>
+					<div class="dashboard-panel">
+						<div class="balance">
+							<div class="panel-title">Next Loan Repayment</div>
+							<div class="balance-value">P 1000</div>
+							<div class="panel-title force-roboto">28/09/2021</div>
+						</div>
+						<div class="btn-link-container">
+							<a href="#" class="btn-link">View History</a>
+						</div>						
+					</div>						
+					<div class="dashboard-panel">
+						<div class="balance">
+							<div class="panel-title">Announcement</div>
+							<div class="panel-announcement-box">
+								<img src="../resources/itshetseng-saccos-logo.png" />
+							</div>
+							<div class="panel-title force-roboto fake-link" style="color: var(--theme-front-dark);font-weight: bold">Know your By-Laws &raquo;</div>
+						</div>
+						<div class="btn-link-container">
+							<a href="#" class="btn-link">View All</a>
+						</div>						
+					</div>						
+				</div>	
+			</div>
+		</div>
 	</main>
 </body>
 </html>
