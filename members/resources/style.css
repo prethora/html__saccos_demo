@@ -287,7 +287,7 @@ a.btn-link
 
 #main-panel .dashboard-panel .panel-announcement-box img
 {
-	height: 60px;
+	width: calc(100% - 46px);
 }
 
 .force-roboto
