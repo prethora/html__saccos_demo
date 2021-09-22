@@ -5,6 +5,8 @@
 
 body
 {
+	--sizes-header-height: 64px;
+	--sizes-left-panel-width: 255px;
 	--theme-green: #005039;
 	--theme-green-light: #06ad7d;
 	--theme-dark: #282828;
@@ -36,7 +38,7 @@ header
 	transform: translateY(-100%);
 	transition: transform 0.3s;
 	position: relative;
-	height: 64px;
+	height: var(--sizes-header-height);
 	background-color: var(--theme-blue);
 	box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);	
 	z-index: 1;
@@ -57,6 +59,8 @@ header.show
 
 #avatar
 {
+	opacity: 1;
+	transition: opacity 0.6s;
 	position: absolute;
 	height: calc(100% - 30px);
 	right: 15px;
@@ -65,12 +69,25 @@ header.show
 	cursor: pointer;
 }
 
+@media (hover: hover) 
+{
+	#avatar:hover
+	{
+		opacity: 0.8;	
+	}	
+}
+
 main
 {
-	--left-panel-width: 255px;
 	position: absolute;
-	width:  100%;
+	left: 0px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	/*
+	width: 100%;
 	height: calc(100% - 64px);
+	*/
 }
 
 html body.no-animations #left-menu
@@ -82,7 +99,7 @@ html body.no-animations #left-menu
 
 #left-menu
 {
-	transform: translateX(-25%);
+	transform: translateX(-30%);
 	/* 
 	transform: translateX(-100%);
 	transition: transform 0.4s;
@@ -90,7 +107,7 @@ html body.no-animations #left-menu
 	opacity: 0;
 	transition: opacity 0.4s,transform 0.4s;
 	height:  100%;
-	width: var(--left-panel-width);
+	width: var(--sizes-left-panel-width);
 	background-color: var(--theme-dark);
 	border-right: 1px solid rgba(255, 255, 255, 0.1);		
 }
@@ -108,9 +125,9 @@ html body.no-animations #left-menu
 {	
 	--column-spacing: 28px;
 	position: absolute;
-	left: var(--left-panel-width);
+	left: var(--sizes-left-panel-width);
 	right: 0px;
-	top: 0px;
+	top: var(--sizes-header-height);
 	bottom: 0px;
 	padding: var(--column-spacing);
 	overflow-y: hidden;	
@@ -149,19 +166,29 @@ html body.no-animations #main-panel .title
 
 #left-menu-items
 {
-	padding-top: 20px;
+	padding-top: calc(var(--sizes-header-height) + 20px);
 }
 
-html body.no-animations #left-menu-items .item
+html body.no-animations #left-menu-items .holder
 {
 	opacity: 1;
 	transition-property: none;	
 }
 
-#left-menu-items .item
+#left-menu-items .holder
 {
 	opacity: 0;
 	transition: opacity 0.8s;
+}
+
+#left-menu-items .holder.show
+{
+	opacity: 1;
+}
+
+#left-menu-items .item
+{	
+	transition: background-color 0.3s;
 	--border-left-size: 4px;
 	border-left: var(--border-left-size) solid var(--theme-dark);
 	position: relative;	
@@ -172,11 +199,6 @@ html body.no-animations #left-menu-items .item
 	text-align: left;
 	padding: 15px 0px;
 	padding-left: 48px;	
-}
-
-#left-menu-items .item.show
-{
-	opacity: 1;
 }
 
 #left-menu-items .hot
@@ -306,6 +328,8 @@ div.centered
 
 a.btn
 {
+	opacity: 1;
+	transition: opacity 0.6s;
 	text-decoration: none;
 	background-color: var(--theme-blue);
 	color: #FFF;
@@ -313,14 +337,31 @@ a.btn
 	font-size: 15px;
 }
 
+@media (hover: hover) 
+{
+	a.btn:hover
+	{
+		opacity: 0.8;
+	}
+}
+
 a.btn-link
 {
+	opacity: 1;
+	transition: opacity 0.6s;
 	text-decoration: none;
 	color: var(--theme-blue);
 	font-size: 14px;
 	font-weight: bold;
 }
 
+@media (hover: hover) 
+{
+	a.btn-link:hover
+	{
+		opacity: 0.8;
+	}	
+}
 
 #main-panel .dashboard-panel .dotted-border.manage-deposits
 {
@@ -480,15 +521,20 @@ header .account-menu.show
 
 header .account-menu .item
 {
+	transition: background-color 0.3s;
 	padding: 10px 65px;
 	cursor: pointer;
 	color: var(--theme-front-dark-lighter);
+	background-color: var(--theme-back-light-contrast);
 }
 
-header .account-menu .item:hover
+@media (hover: hover) 
 {
-	background-color: #bfbfbf;
-	color: #FFFFFF;
+	header .account-menu .item:hover
+	{
+		background-color: #bfbfbf;
+		color: #FFFFFF;
+	}
 }
 
 header .account-menu .item:not(.last)
