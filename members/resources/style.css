@@ -24,6 +24,13 @@ body
 	/* font-family: 'Roboto', sans-serif; */
 }
 
+html body.no-animations header
+{
+	transform: translateY(0px);
+	transition-property: none;
+}
+
+
 header
 {
 	transform: translateY(-100%);
@@ -32,6 +39,7 @@ header
 	height: 64px;
 	background-color: var(--theme-blue);
 	box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);	
+	z-index: 1;
 }
 
 header.show
@@ -63,6 +71,13 @@ main
 	position: absolute;
 	width:  100%;
 	height: calc(100% - 64px);
+}
+
+html body.no-animations #left-menu
+{
+	transform: translateX(0px);	
+	opacity: 1;
+	transition-property: none;
 }
 
 #left-menu
@@ -98,7 +113,23 @@ main
 	top: 0px;
 	bottom: 0px;
 	padding: var(--column-spacing);
-	overflow-y: scroll;
+	overflow-y: hidden;	
+}
+
+body.animations-done #main-panel
+{
+	overflow-y: scroll;	
+}
+
+html body.no-animations #main-panel
+{
+	overflow-y: scroll;		
+}
+
+html body.no-animations #main-panel .title
+{
+	opacity: 1;
+	transition-property: none;	
 }
 
 #main-panel .title
@@ -119,6 +150,12 @@ main
 #left-menu-items
 {
 	padding-top: 20px;
+}
+
+html body.no-animations #left-menu-items .item
+{
+	opacity: 1;
+	transition-property: none;	
 }
 
 #left-menu-items .item
@@ -197,6 +234,13 @@ main
 #main-panel .dashboard-column
 {
 	width: calc((100% - (var(--column-spacing) * 2)) / 3);
+}
+
+html body.no-animations #main-panel .dashboard-panel
+{
+	opacity: 1;
+	transform: scale(1);
+	transition-property: none;	
 }
 
 #main-panel .dashboard-panel
@@ -360,6 +404,11 @@ a.btn-link
   	}
 }
 
+html body.no-animations #loader
+{
+	display: none;
+}
+
 #loader
 {
 	opacity: 1;
@@ -409,4 +458,40 @@ a.btn-link
 	text-align: center;
 	font-family: 'Roboto', sans-serif;
 	color: #aaaaaa;
+}
+
+header .account-menu
+{
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.2s,opacity 0.2s;
+	position: fixed;
+	top:  calc(100% - 10px);
+	right:  18px;
+	background-color: var(--theme-back-light-contrast);
+	border: 1px solid var(--theme-back-light-border);
+}
+
+header .account-menu.show
+{
+	visibility: visible;
+	opacity: 1;	
+}
+
+header .account-menu .item
+{
+	padding: 10px 65px;
+	cursor: pointer;
+	color: var(--theme-front-dark-lighter);
+}
+
+header .account-menu .item:hover
+{
+	background-color: #bfbfbf;
+	color: #FFFFFF;
+}
+
+header .account-menu .item:not(.last)
+{
+	border-bottom: 1px solid var(--theme-back-light-border);
 }

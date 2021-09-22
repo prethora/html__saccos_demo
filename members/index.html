@@ -9,8 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="resources/fonts/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="resources/style.css?v=1.0.4">
-	<script type="text/javascript">
-
+	<script type="text/javascript">		
 		class LinearAnimator
 		{
 			list = [];
@@ -105,7 +104,7 @@
 			{
 				ani.add(shower(item),shortInterval1);
 			});
-			ani.add(shower(mainPanelTitle),shortInterval2);
+			ani.add(() => { shower(mainPanelTitle)(); document.body.classList.add("animations-done"); },shortInterval2);
 			document.querySelectorAll("#main-panel .dashboard-panel").forEach((item) => 
 			{
 				ani.add(shower(item),shortInterval2);
@@ -115,12 +114,65 @@
 
 		function windowOnLoad()
 		{
-			showProgress(animateShow);
+			if (!document.body.classList.contains("no-animations"))
+			{
+				showProgress(animateShow);
+			}			
+		}
+
+		let clickListenerAdded = false;
+
+		function addClickListener()
+		{
+			if (!clickListenerAdded)
+			{
+				clickListenerAdded = true;
+				document.addEventListener("click",outsideClickListener);
+			}
+		}
+
+		function removeClickListener()
+		{
+			if (clickListenerAdded)
+			{
+				document.removeEventListener("click",outsideClickListener);	
+				clickListenerAdded = false;
+			}			
+		}
+
+		function outsideClickListener()
+		{
+			const menu = document.querySelector("header .account-menu");
+    		if (!menu.contains(event.target) && menu.classList.contains("show")) 
+    		{
+      			menu.classList.remove("show");
+      			removeClickListener();
+      		}
+		}
+
+		function avatarClicked()
+		{		
+			const menu = document.querySelector("header .account-menu");
+			if (menu.classList.contains("show"))
+			{
+      			menu.classList.remove("show");
+      			removeClickListener();
+			}
+			else
+			{
+				menu.classList.add("show");
+				setTimeout(addClickListener,0);
+			}								
+		}
+
+		function logoutClicked()
+		{
+			window.location.replace("https://prethora.github.io/html__saccos_demo/");
 		}
 
 	</script>
 </head>
-<body onload="windowOnLoad()">
+<body onload="windowOnLoad()" class="no-animations-">
 	<div id="loader">
 		<div class="container">
 			<canvas class="progress"></canvas>
@@ -129,10 +181,14 @@
 	</div>
 	<header>
 		<img id="logo" src="resources/itshetseng-saccos-logo-white.png" />
-		<img id="avatar" src="resources/blank-profile.svg" />
+		<img id="avatar" src="resources/blank-profile.svg" onclick="avatarClicked()" />
 		<div id="header-name">
 			Robert Akanyang
 		</div>			
+		<div class="account-menu">
+			<div class="item">Profile</div>
+			<div class="item last" onclick="logoutClicked()">Logout</div>
+		</div>
 	</header>
 	<main>
 		<div id="left-menu">			
