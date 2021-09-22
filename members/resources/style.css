@@ -6,9 +6,12 @@
 
 body
 {
+	--timings-menu-overlay-transition: 0.5s;
 	--sizes-header-height: 64px;
 	--sizes-left-panel-width: 255px;
 	--sizes-left-panel-width-short: 56px;
+	--sizes-menu-toggler-width: 52px;
+	--offsets-logo-left: 13px;
 	--theme-green: #005039;
 	--theme-green-light: #06ad7d;
 	--theme-dark: #282828;
@@ -43,7 +46,7 @@ header
 	height: var(--sizes-header-height);
 	background-color: var(--theme-blue);
 	box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);	
-	z-index: 1;
+	z-index: 3;
 }
 
 header.show
@@ -55,7 +58,7 @@ header.show
 {
 	position: absolute;
 	height: calc(100% - 24px);
-	left: 13px;
+	left: var(--offsets-logo-left);
 	top:  12px;
 }
 
@@ -111,7 +114,6 @@ html body.no-animations #left-menu
 	height:  100%;
 	width: var(--sizes-left-panel-width);
 	background-color: var(--theme-dark);
-	border-right: 1px solid rgba(255, 255, 255, 0.1);		
 }
 
 #left-menu.show
@@ -166,7 +168,7 @@ html body.no-animations #main-panel .title
 	opacity: 1;
 }
 
-#left-menu-items
+#left-menu-items,#left-menu-overlay
 {
 	padding-top: calc(var(--sizes-header-height) + 20px);
 }
@@ -188,7 +190,7 @@ html body.no-animations #left-menu-items .holder
 	opacity: 1;
 }
 
-#left-menu-items .item
+#left-menu-items .item,#left-menu-overlay .item
 {	
 	transition: background-color 0.3s;
 	--border-left-size: 4px;
@@ -203,7 +205,13 @@ html body.no-animations #left-menu-items .holder
 	padding-left: 48px;	
 }
 
-#left-menu-items .hot
+body #left-menu-overlay .item
+{
+	border-left: 0px solid #FFFF;
+	padding-left: 0px;	
+}
+
+#left-menu-items .hot,#left-menu-overlay .hot
 {
 	position: absolute;
 	left: 0px;
@@ -214,7 +222,7 @@ html body.no-animations #left-menu-items .holder
 	cursor: pointer;
 }
 
-#left-menu-items .sep
+#left-menu-items .sep,#left-menu-overlay .sep
 {
 	width: 100%;
 	height: 1px;
@@ -230,11 +238,16 @@ html body.no-animations #left-menu-items .holder
 	top: calc( (100% - var(--height)) / 2 );
 }
 
-#left-menu-items .item.selected
+#left-menu-items .item.selected,#left-menu-overlay .item.selected
 {
 	border-left: var(--border-left-size) solid var(--theme-green-light);
 	background-color: #1f1f1f;
 	color: var(--theme-green-light);
+}
+
+body #left-menu-overlay .item.selected
+{
+	border-left: 0px solid #FFF;
 }
 
 #header-name
@@ -597,8 +610,104 @@ header .account-menu .item:not(.last)
 	height: 100%;
 }
 
+#left-menu-overlay
+{
+	display: none;
+	opacity: 0;
+	transform: translateX(-5%);
+	transition: opacity var(--timings-menu-overlay-transition),transform var(--timings-menu-overlay-transition);
+	position: absolute;
+	left: var(--sizes-left-panel-width-short);
+	top: 0px;
+	bottom: 0px;
+	width: 215px;
+	background-color: var(--theme-dark);
+	z-index: 2;
+}
+
+#left-menu-overlay.show
+{
+	opacity: 1;
+	transform: translateX(0px);
+}
+
+#menu-toggler
+{
+	--line-color: #d6d2d2;
+	--line-width: 2px;
+	display: none;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	width: var(--sizes-menu-toggler-width);
+	padding: 24px 17px;
+	padding-right: 14px;
+}
+
+#menu-toggler .icon
+{
+	position: relative;
+	border-top: var(--line-width) solid var(--line-color);
+	border-bottom: var(--line-width) solid var(--line-color);
+	width: 100%;
+	height: 100%;
+}
+
+#menu-toggler .icon .middle
+{
+	height: var(--line-width);
+	width: 100%;
+	position: absolute;
+	top: calc(50% - 1px);
+	left: 0px;
+	background-color: var(--line-color);
+}
+
+#main-panel-overlay
+{
+	display: none;
+	position: absolute;
+	left: var(--sizes-left-panel-width-short);
+	top: var(--sizes-header-height);
+	right: 0px;
+	bottom: 0px;
+	background-color: #000000;
+	z-index: 1;
+
+	transition: visibility var(--timings-menu-overlay-transition),opacity var(--timings-menu-overlay-transition);
+	visibility: hidden;
+	opacity: 0;
+}
+
+#main-panel-overlay.show
+{
+	visibility: visible;
+	opacity: 0.70;
+}
+
 @media screen and (max-width: 1080px) 
 {
+	html body #main-panel-overlay
+	{
+		display: block;
+	}
+
+	html body #logo
+	{
+		left: calc(var(--sizes-menu-toggler-width));
+	}
+
+	html body #menu-toggler
+	{
+		display: block;
+	}
+
+	html body #left-menu-overlay
+	{
+		display: block;
+	}
+
 	html body header #header-name
 	{
 		display: none;
