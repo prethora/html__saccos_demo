@@ -8,6 +8,7 @@ body
 {
 	--sizes-header-height: 64px;
 	--sizes-left-panel-width: 255px;
+	--sizes-left-panel-width-short: 45px;
 	--theme-green: #005039;
 	--theme-green-light: #06ad7d;
 	--theme-dark: #282828;
@@ -224,7 +225,7 @@ html body.no-animations #left-menu-items .holder
 {	
 	--height:  22px;
 	position: absolute;
-	left: 15px;
+	left: 8px;
 	font-size: var(--height);
 	top: calc( (100% - var(--height)) / 2 );
 }
@@ -589,4 +590,33 @@ header .account-menu .item:not(.last)
 #main-panel .page-panel.show
 {
 	display: block;	
+}
+
+#left-menu-holder
+{
+	height: 100%;
+}
+
+@media screen and (max-width: 1080px) 
+{
+	html body header #header-name
+	{
+		display: none;
+	}
+
+	html body main #left-menu
+	{
+		width: var(--sizes-left-panel-width-short);
+		overflow: hidden;
+	}
+
+	html body main #left-menu .item span
+	{
+		display: none;
+	}
+
+	html body main #main-panel
+	{
+		left: var(--sizes-left-panel-width-short);
+	}
 }
