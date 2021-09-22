@@ -133,14 +133,14 @@ html body.no-animations #left-menu
 	overflow-y: hidden;	
 }
 
-body.animations-done #main-panel
+#main-panel.animation-started
 {
-	overflow-y: scroll;	
+	overflow-y: auto;	
 }
 
 html body.no-animations #main-panel
 {
-	overflow-y: scroll;		
+	overflow-y: auto;		
 }
 
 html body.no-animations #main-panel .title
@@ -258,18 +258,27 @@ html body.no-animations #left-menu-items .holder
 	width: calc((100% - (var(--column-spacing) * 2)) / 3);
 }
 
-html body.no-animations #main-panel .dashboard-panel
+html body.no-animations #main-panel .dashboard-panel,html body.no-animations #main-panel .under-construction-panel
 {
 	opacity: 1;
 	transform: scale(1);
 	transition-property: none;	
 }
 
-#main-panel .dashboard-panel
+#main-panel .dashboard-panel,#main-panel .under-construction-panel
 {
 	opacity: 0;
-	transform: scale(0.95);
-	transition: opacity 0.5s,transform 0.5s;
+	transform: scale(0.97);
+	transition: opacity 0.5s,transform 0.5s;	
+}
+
+body #main-panel .under-construction-panel
+{
+	transform: scale(0.99);
+}
+
+#main-panel .dashboard-panel
+{
 	background-color: var(--theme-back-light-contrast);
 	border: 1px solid var(--theme-back-light-border);	
 	border-radius: 6px;
@@ -277,7 +286,35 @@ html body.no-animations #main-panel .dashboard-panel
 	margin-bottom: calc(var(--column-spacing) * 0.8);
 }
 
-#main-panel .dashboard-panel.show
+#main-panel .under-construction-panel
+{
+	background-color: var(--theme-back-light-contrast);
+	border: 1px solid var(--theme-back-light-border);	
+	border-radius: 6px;
+	padding: 20px;	
+	text-align: center;
+}
+
+#main-panel .under-construction-panel .dotted-border
+{
+	margin: -7px;
+	border: 1px dashed var(--theme-back-light-border);
+	padding: 40px 0px;
+}
+
+#main-panel .under-construction-panel img
+{
+	height: 100px;
+	margin-bottom: 10px;
+}
+
+#main-panel .under-construction-panel .text
+{
+	color: var(--theme-front-dark-lighter);	
+	font-size: 18px;
+}
+
+#main-panel .dashboard-panel.show,#main-panel .under-construction-panel.show
 {
 	opacity: 1;
 	transform: scale(1);
@@ -503,11 +540,12 @@ html body.no-animations #loader
 
 header .account-menu
 {
+	box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
 	visibility: hidden;
 	opacity: 0;
 	transition: visibility 0.2s,opacity 0.2s;
 	position: fixed;
-	top:  calc(100% - 10px);
+	top:  calc(100% - 12px);
 	right:  18px;
 	background-color: var(--theme-back-light-contrast);
 	border: 1px solid var(--theme-back-light-border);
@@ -522,7 +560,7 @@ header .account-menu.show
 header .account-menu .item
 {
 	transition: background-color 0.3s;
-	padding: 10px 65px;
+	padding: 10px 75px;
 	cursor: pointer;
 	color: var(--theme-front-dark-lighter);
 	background-color: var(--theme-back-light-contrast);
@@ -540,4 +578,14 @@ header .account-menu .item
 header .account-menu .item:not(.last)
 {
 	border-bottom: 1px solid var(--theme-back-light-border);
+}
+
+#main-panel .page-panel
+{
+	display: none;
+}
+
+#main-panel .page-panel.show
+{
+	display: block;	
 }
