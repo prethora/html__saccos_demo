@@ -8,7 +8,7 @@ body
 {
 	--sizes-header-height: 64px;
 	--sizes-left-panel-width: 255px;
-	--sizes-left-panel-width-short: 45px;
+	--sizes-left-panel-width-short: 48px;
 	--theme-green: #005039;
 	--theme-green-light: #06ad7d;
 	--theme-dark: #282828;
@@ -225,7 +225,7 @@ html body.no-animations #left-menu-items .holder
 {	
 	--height:  22px;
 	position: absolute;
-	left: 8px;
+	left: 15px;
 	font-size: var(--height);
 	top: calc( (100% - var(--height)) / 2 );
 }
@@ -610,6 +610,11 @@ header .account-menu .item:not(.last)
 		overflow: hidden;
 	}
 
+	html body main #left-menu #left-menu-items .icon
+	{
+		left: 9px;
+	}
+
 	html body main #left-menu .item span
 	{
 		display: none;
@@ -618,5 +623,10 @@ header .account-menu .item:not(.last)
 	html body main #main-panel
 	{
 		left: var(--sizes-left-panel-width-short);
+	}
+
+	html body main #left-menu #left-menu-items .item
+	{
+		padding: 20px 0px;
 	}
 }
