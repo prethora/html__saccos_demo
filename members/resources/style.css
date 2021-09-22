@@ -8,7 +8,7 @@ body
 {
 	--sizes-header-height: 64px;
 	--sizes-left-panel-width: 255px;
-	--sizes-left-panel-width-short: 48px;
+	--sizes-left-panel-width-short: 56px;
 	--theme-green: #005039;
 	--theme-green-light: #06ad7d;
 	--theme-dark: #282828;
@@ -612,7 +612,7 @@ header .account-menu .item:not(.last)
 
 	html body main #left-menu #left-menu-items .icon
 	{
-		left: 9px;
+		left: 13px;
 	}
 
 	html body main #left-menu .item span
@@ -627,6 +627,6 @@ header .account-menu .item:not(.last)
 
 	html body main #left-menu #left-menu-items .item
 	{
-		padding: 20px 0px;
+		padding: 24px 0px;
 	}
 }
