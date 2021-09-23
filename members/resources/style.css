@@ -4,14 +4,26 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
+
 html
 {
-	height: 100%;
+}
+
+div.wrapper 
+{
+    position: fixed;
+    top: 0.5px;
+    left: 0;
+    right: 0;
+    bottom: 0.5px;
+    /*
+    overflow-x: hidden;
+    overflow-y: auto;
+    */
 }
 
 body
 {
-	height: 100%;
 	--timings-menu-overlay-transition: 0.4s;
 	--sizes-header-height: 64px;
 	--sizes-left-panel-width: 255px;
@@ -94,6 +106,8 @@ header.show
 
 #avatar .back
 {
+	opacity: 1;
+	transition: opacity 0.3s;
 	position: absolute;
 	left: 0px;
 	top: 0px;
@@ -755,6 +769,8 @@ header .account-menu .item:not(.last)
 
 #menu-toggler .back
 {
+	opacity: 1;
+	transition: opacity 0.3s;
 	position: absolute;
 	left: 0px;
 	right: 0px;
