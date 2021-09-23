@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,700;0,800;1,500;1,700">
 	<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="resources/fonts/fontello/css/fontello.css">
-	<link rel="stylesheet" type="text/css" href="resources/style.css?v=1.0.17">
+	<link rel="stylesheet" type="text/css" href="resources/style.css?v=1.0.18">
 	<script type="text/javascript">		
 		class LinearAnimator
 		{
@@ -65,7 +65,7 @@
 			let ctx = canvas.getContext("2d");						
 			ctx.strokeStyle = "#dddddd";
 			ctx.lineWidth = 8;			
-			drawProgressArc(ctx,1);
+			drawProgressArc(ctx,1);			
 			ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue("--theme-light-blue");
 			let res = 18;
 			let p = 0;
@@ -97,7 +97,7 @@
 		function unshower(ele) { return () => ele.classList.remove("show"); };
 		function hider(ele) { return () => ele.classList.add("hide"); };
 
-		function animateDashboardPage()
+		function animateDashboardPage(cb)
 		{
 			const pageTitle = document.querySelector("#page-dashboard .title");
 			const shortInterval = 0.11;
@@ -107,10 +107,10 @@
 			{
 				ani.add(shower(item),shortInterval);
 			});			
-			ani.run();
+			ani.run(cb);
 		}
 
-		function animateConstructionsPage(id)
+		function animateConstructionsPage(id,cb)
 		{
 			const pageTitle = document.querySelector("#page-"+id+" .title");
 			const shortInterval = 0.11;
@@ -120,7 +120,7 @@
 			{
 				ani.add(shower(item),shortInterval);
 			});			
-			ani.run();
+			ani.run(cb);
 		}
 
 		function resetDashboardPageAnimations()
@@ -156,19 +156,30 @@
 		}
 
 		let lastPageId = "dashboard";
+		let isFirstAnimation = true;
 
 		function animatePage(id)
 		{
 			console.log("animatePage",id);
 			const mainPanel = document.querySelector("#main-panel");
 			mainPanel.classList.add("animation-started");
+
+			const finalize = () => 
+			{
+				if (isFirstAnimation)
+				{
+					document.body.classList.add("animations-done");
+					isFirstAnimation = false;
+				}
+			};
+
 			if (id=="dashboard") 
 			{
-				animateDashboardPage();
+				animateDashboardPage(finalize);
 			}
 			else
 			{
-				animateConstructionsPage(id);
+				animateConstructionsPage(id,finalize);
 			}
 			if (lastPageId!=id) resetPageAnimations(lastPageId);
 		}
@@ -190,8 +201,58 @@
 			ani.run(() => animatePage("dashboard"));
 		}
 
-		function windowOnLoad()
+		const isMobileEnabled = () => (getComputedStyle(document.body).getPropertyValue("--mobile-enabled")==1);
+
+		const isTouchOnly = () => (getComputedStyle(document.body).getPropertyValue("--touch-only")==1);		
+
+		function attachTouchOnlyEvents()
 		{
+			const selectors = {
+				"#account-menu-overlay .item": {},
+				"#left-menu-items .item,#left-menu-overlay .item": {
+					start: (item) => 
+					{						
+						const id = item.id.substr(item.id.indexOf("menu-item-")+10);
+						document.querySelectorAll("#overlay-menu-item-"+id+",#menu-item-"+id).forEach((elem) => 
+						{
+							elem.classList.add("touch-active");
+						});
+					},
+					end: (item) => 
+					{
+						const id = item.id.substr(item.id.indexOf("menu-item-")+10);
+						document.querySelectorAll("#overlay-menu-item-"+id+",#menu-item-"+id).forEach((elem) => 
+						{
+							elem.classList.remove("touch-active");
+						});
+					}
+				},
+				"#menu-toggler": {},
+				"a.btn": {},
+				"#avatar": {}
+			};			
+			Object.keys(selectors).forEach((key) => 
+			{
+				const entry = selectors[key];				
+				document.querySelectorAll(key).forEach((item) => 
+				{
+					item.addEventListener("touchstart",() => 
+					{
+						item.classList.add("touch-active");
+						if (entry.start) entry.start(item);
+					});
+					item.addEventListener("touchend",() => 
+					{
+						item.classList.remove("touch-active");
+						if (entry.end) entry.end(item);
+					});
+				});
+			});
+		}
+
+		function windowOnLoad()
+		{			
+			if (isTouchOnly()) attachTouchOnlyEvents();
 			if (!document.body.classList.contains("no-animations"))
 			{
 				showProgress(animateShow);
@@ -230,32 +291,55 @@
 
 		function avatarClicked()
 		{		
-			const menu = document.querySelector("header .account-menu");
-			if (menu.classList.contains("show"))
+			if (isMobileEnabled())
 			{
-      			menu.classList.remove("show");
-      			removeClickListener();
+				const accountMenuOverlay = document.querySelector("#account-menu-overlay");	
+				accountMenuOverlay.classList.add("show");
+				document.body.classList.add("disable-scroll");
 			}
 			else
 			{
-				menu.classList.add("show");
-				setTimeout(addClickListener,0);
-			}								
+				const menu = document.querySelector("header .account-menu");
+				if (menu.classList.contains("show"))
+				{
+	      			menu.classList.remove("show");
+	      			removeClickListener();
+				}
+				else
+				{
+					menu.classList.add("show");
+					setTimeout(addClickListener,0);
+				}												
+			}
+		}
+
+		function closeAccountOverlay()
+		{
+			const accountMenuOverlay = document.querySelector("#account-menu-overlay");	
+			accountMenuOverlay.classList.remove("show");		
+			document.body.classList.remove("disable-scroll");
 		}
 
 		function logoutClicked()
 		{
 			window.location.replace("https://prethora.github.io/html__saccos_demo/");
+		}
+
+		function mobileLogoutClicked()
+		{
+			document.querySelector("#account-menu-overlay .menu").classList.add("hide");
+			logoutClicked();
 		}		
 
-		function menuItemClicked(id,fromOverlay)
+		function menuItemClicked(id)
 		{
 			if (lastPageId==id) return;
 			const itemIds = ["dashboard","savings","funeral","loans","settings"];
 			if (itemIds.indexOf(id)!=-1)
 			{
 				document.querySelector("#main-panel").scrollTop = 0;				
-				if (fromOverlay) toggleMenu();
+				const menuOverlay = document.querySelector("#left-menu-overlay");
+				if (menuOverlay.classList.contains("show")) toggleMenu();
 				for(let i=0;i<itemIds.length;i++)
 				{
 					const itemId = itemIds[i];
@@ -290,12 +374,14 @@
 				menuOverlay.classList.remove("show");
 				mainPanelOverlay.classList.remove("show");
 				headerOverlay.classList.remove("show");
+				document.body.classList.remove("disable-scroll");
 			}
 			else
 			{
 				menuOverlay.classList.add("show");
 				mainPanelOverlay.classList.add("show");
 				headerOverlay.classList.add("show");
+				document.body.classList.add("disable-scroll");
 			}			
 		}
 
@@ -308,20 +394,43 @@
 			<div class="percentage">0%</div>
 		</div>
 	</div>
+	<div id="account-menu-overlay">
+		<div class="back" onclick="closeAccountOverlay()"></div>
+		<div class="menu">
+			<div class="user">
+				<img class="avatar" src="resources/blank-profile.svg" />
+				Robert Akanyang
+			</div>
+			<div class="item">
+				<div class="icon icon-user"></div> 
+				<!-- <i class="icon-user"></i> -->
+				Profile
+			</div>
+			<div class="item last" onclick="mobileLogoutClicked()">
+				<div class="icon icon-logout"></div> 
+				<!-- <i class="icon-logout"></i> -->
+				Logout
+			</div>
+		</div>
+	</div>
 	<header>
 		<div id="header-overlay" onclick="toggleMenu()"></div>
 		<div id="menu-toggler" onclick="toggleMenu()">
+			<div class="back"></div>
 			<div class="icon">
 				<div class="middle"></div>
 			</div>
 		</div>
 		<img id="logo" src="resources/itshetseng-saccos-logo-white.png" />
-		<img id="avatar" src="resources/blank-profile.svg" onclick="avatarClicked()" />
+		<div id="avatar" onclick="avatarClicked()">
+			<div class="back"></div>
+			<img src="resources/blank-profile.svg" />
+		</div>		
 		<div id="header-name">
 			Robert Akanyang
 		</div>			
 		<div class="account-menu">
-			<div class="item" onclick="alert(window.innerWidth+','+window.innerHeight)">Profile</div>
+			<div class="item first">Profile</div>
 			<div class="item last" onclick="logoutClicked()">Logout</div>
 		</div>
 	</header>
@@ -378,24 +487,24 @@
 		</div>
 		<div id="left-menu-overlay">
 			<div id="overlay-menu-item-dashboard" class="item selected">
-				<div class="hot" onclick="menuItemClicked('dashboard',true)"></div>
+				<div class="hot" onclick="menuItemClicked('dashboard')"></div>
 				<span>Dashboard</span>
 			</div>
 			<div id="overlay-menu-item-savings" class="item">
-				<div class="hot" onclick="menuItemClicked('savings',true)"></div>
+				<div class="hot" onclick="menuItemClicked('savings')"></div>
 				<span>Savings</span>
 			</div>
 			<div id="overlay-menu-item-funeral" class="item">					
-				<div class="hot" onclick="menuItemClicked('funeral',true)"></div>
+				<div class="hot" onclick="menuItemClicked('funeral')"></div>
 				<span>Funeral Scheme</span>
 			</div>			
 			<div id="overlay-menu-item-loans" class="item">					
-				<div class="hot" onclick="menuItemClicked('loans',true)"></div>
+				<div class="hot" onclick="menuItemClicked('loans')"></div>
 				<span>Loans</span>
 			</div>
 			<div class="sep"></div>
 			<div id="overlay-menu-item-settings" class="item">					
-				<div class="hot" onclick="menuItemClicked('settings',true)"></div>
+				<div class="hot" onclick="menuItemClicked('settings')"></div>
 				<span>Settings</span>
 			</div>
 		</div>
@@ -404,7 +513,7 @@
 			<div id="page-dashboard" class="page-panel show">
 				<div class="title">
 					Dashboard
-				</div>			
+				</div>
 				<div class="dashboard-container">
 					<div class="dashboard-column">
 						<div class="dashboard-panel">
