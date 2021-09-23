@@ -881,21 +881,25 @@ header .account-menu .item:not(.last)
 
 #account-menu-overlay .menu
 {
-	--horizontal-margins: 15px;
+	--horizontal-margins: 10px;
 	transform: translateY(20%);
 	opacity: 0;
 	transition: transform var(--transition-duration),opacity var(--transition-duration);
 	position: absolute;		
-	bottom: var(--horizontal-margins);
+	/* bottom: var(--horizontal-margins); */
+	bottom: 2px;
 	left: var(--horizontal-margins);
 	right: var(--horizontal-margins);
 	background-color: var(--theme-back-light-contrast);
 	box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
 	color: var(--theme-front-dark-lighter);
 	font-size: 18px;
-	--border-radius: 8px;
+	--border-radius: 10px;
+	/* --border-radius: 0px; */
 	--item-vertical-padding: 24px;
-	border-radius: var(--border-radius);;
+	/* border-radius: var(--border-radius); */
+	border-top-left-radius: var(--border-radius);
+	border-top-right-radius: var(--border-radius);
 }
 
 #account-menu-overlay.show .menu
@@ -915,12 +919,12 @@ header .account-menu .item:not(.last)
 	border-top-left-radius: var(--border-radius);
 	border-top-right-radius: var(--border-radius);
 	padding: var(--item-vertical-padding) 0px;
-	/* padding-left: 80px; */
-	padding-right: 0px;
+	padding-left: 80px;
+	/* padding-right: 0px; */
 	position: relative;
 	border-bottom: 1px solid var(--theme-back-light-darker-border);
 	font-weight: bold;
-	text-align: center;
+	/* text-align: center; */
 	background-color: #dfdfdf;
 }
 
@@ -929,15 +933,18 @@ header .account-menu .item:not(.last)
 	transition: background-color 0.2s;
 	padding: var(--item-vertical-padding) 0px;
 	padding-right: 5px;
-	text-align: center;
+	padding-left: 75px;
+	/* text-align: center; */
 	position: relative;	
 	color: #a5a5a5;
 }
 
 #account-menu-overlay .item.last
 {
+	/*
 	border-bottom-left-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
+	*/
 }
 
 #account-menu-overlay .item.touch-active
@@ -969,6 +976,7 @@ header .account-menu .item:not(.last)
 	position: absolute;
 	left: 15px;
 	top: calc((100% - var(--height))/2 + 1px);
+	border: 1px solid #888888;
 }
 
 @media screen and (max-width: 789px)
