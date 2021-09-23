@@ -272,7 +272,14 @@ body #left-menu-overlay .item.selected
 
 #main-panel .dashboard-column
 {
-	width: calc((100% - (var(--column-spacing) * 2)) / 3);
+	/* width: calc((100% - (var(--column-spacing) * 2)) / 3); */
+	flex: 1;
+}
+
+#main-panel .spacer
+{
+	width: var(--column-spacing);
+	height: var(--column-spacing);
 }
 
 html body.no-animations #main-panel .dashboard-panel,html body.no-animations #main-panel .under-construction-panel
@@ -690,8 +697,50 @@ header .account-menu .item:not(.last)
 	opacity: 0.70;
 }
 
-@media screen and (max-width: 1080px) 
+#header-overlay
 {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: var(--sizes-menu-toggler-width);
+	bottom: 0px;
+	right: 0px;	
+	z-index: 1;
+	visibility: hidden;
+	transition: visibility var(--timings-menu-overlay-transition);
+}
+
+#header-overlay.show
+{
+	visibility: visible;
+}
+
+@media screen and (max-width: 789px)
+{
+	html body #main-panel .dashboard-container
+	{
+		flex-direction: column;
+	}
+
+	html body #main-panel .spacer
+	{
+		width: 0px;
+		height: 0px;
+	}
+
+	html body #main-panel .dashboard-panel .dotted-border.manage-deposits
+	{
+		padding: 50px 0px;
+	}
+}
+
+@media screen and (max-width: 1080px)
+{
+	html body #header-overlay
+	{
+		display: block;
+	}
+
 	html body #main-panel-overlay
 	{
 		display: block;
