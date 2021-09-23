@@ -253,6 +253,11 @@ html body.no-animations #left-menu-items .holder
 	height: 48px;
 }
 
+body.touch-only #left-menu-items .item,body.touch-only #left-menu-overlay .item
+{
+	transition-property: none;
+}
+
 body #left-menu-overlay .item
 {
 	border-left: 0px solid #FFFF;
@@ -442,6 +447,11 @@ a.btn
 	color: #FFF;
 	padding: 15px 22px;
 	font-size: 15px;
+}
+
+body.touch-only a.btn
+{
+	transition-property: none;	
 }
 
 @media (hover: hover) 
