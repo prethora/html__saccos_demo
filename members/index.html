@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,700;0,800;1,500;1,700">
 	<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="resources/fonts/fontello/css/fontello.css">
-	<link rel="stylesheet" type="text/css" href="resources/style.css?v=1.0.23">
+	<link rel="stylesheet" type="text/css" href="resources/style.css?v=1.0.24">
 	<script type="text/javascript">		
 		class LinearAnimator
 		{
@@ -231,20 +231,54 @@
 				"a.btn": {},
 				"#avatar": {}
 			};			
+
+			const minGap = 200;
+
 			Object.keys(selectors).forEach((key) => 
 			{
 				const entry = selectors[key];				
 				document.querySelectorAll(key).forEach((item) => 
 				{
+					const controller = {
+						state: "none", // "none","started","ending"
+						startedAt: null
+					};
+
+					const doEnd = () => 
+					{
+						controller.state = "none";
+						controller.startedAt = null;
+						if (controller.timeout) clearTimeout(controller.timeout);
+						controller.timeout = null;
+						item.classList.remove("touch-active");
+						if (entry.end) entry.end(item);
+					};
+
 					item.addEventListener("touchstart",() => 
 					{
+						if (controller.state=="ending") doEnd();
+
 						item.classList.add("touch-active");
 						if (entry.start) entry.start(item);
+						
+						controller.state = "started";
+						controller.startedAt = (new Date()).getTime();
+						controller.timeout = null
 					});
 					item.addEventListener("touchend",() => 
 					{
-						item.classList.remove("touch-active");
-						if (entry.end) entry.end(item);
+						const nwts = (new Date()).getTime();
+						const elapsed = nwts-controller.startedAt;
+
+						if (elapsed>=minGap)
+						{
+							doEnd();
+						}
+						else
+						{
+							controller.state = "ending";
+							controller.timeout = setTimeout(doEnd,minGap-elapsed);
+						}
 					});
 				});
 			});

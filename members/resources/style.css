@@ -926,6 +926,7 @@ header .account-menu .item:not(.last)
 
 #account-menu-overlay .item
 {
+	transition: background-color 0.2s;
 	padding: var(--item-vertical-padding) 0px;
 	padding-right: 5px;
 	text-align: center;
