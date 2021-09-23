@@ -616,8 +616,9 @@ header .account-menu .item:not(.last)
 {
 	display: none;
 	opacity: 0;
+	visibility: hidden;
 	transform: translateX(-5%);
-	transition: opacity var(--timings-menu-overlay-transition),transform var(--timings-menu-overlay-transition);
+	transition: opacity var(--timings-menu-overlay-transition),transform var(--timings-menu-overlay-transition),visibility var(--timings-menu-overlay-transition);
 	position: absolute;
 	left: var(--sizes-left-panel-width-short);
 	top: 0px;
@@ -631,6 +632,7 @@ header .account-menu .item:not(.last)
 {
 	opacity: 1;
 	transform: translateX(0px);
+	visibility: visible;
 }
 
 #menu-toggler
