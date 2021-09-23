@@ -372,8 +372,12 @@ body #main-panel .under-construction-panel
 #main-panel .dashboard-panel
 {
 	background-color: var(--theme-back-light-contrast);
-	border: 1px solid var(--theme-back-light-border);	
+	
+	/*
+	border: 1px solid var(--theme-back-light-border);
+	*/
 	border-radius: 6px;
+	
 	padding: 20px;
 	margin-bottom: calc(var(--column-spacing) * 0.8);
 }
@@ -410,6 +414,7 @@ body #main-panel .under-construction-panel
 {
 	opacity: 1;
 	transform: scale(1);
+	box-shadow: 0px 1px 7px 1px rgb(0 0 0 / 10%);
 }
 
 #main-panel .dashboard-panel .dotted-border
