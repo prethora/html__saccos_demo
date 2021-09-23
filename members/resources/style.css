@@ -253,10 +253,13 @@ html body.no-animations #left-menu-items .holder
 	height: 48px;
 }
 
+/*
 body.touch-only #left-menu-items .item,body.touch-only #left-menu-overlay .item
 {
+	transition: opacity 0.3s;
 	transition-property: none;
 }
+*/
 
 body #left-menu-overlay .item
 {
@@ -451,7 +454,7 @@ a.btn
 
 body.touch-only a.btn
 {
-	transition-property: none;	
+	transition: opacity 0.3s;
 }
 
 @media (hover: hover) 
