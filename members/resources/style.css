@@ -203,6 +203,8 @@ html body.no-animations #left-menu-items .holder
 	text-align: left;
 	padding: 15px 0px;
 	padding-left: 48px;	
+	line-height: 18px;
+	height: 48px;
 }
 
 body #left-menu-overlay .item
