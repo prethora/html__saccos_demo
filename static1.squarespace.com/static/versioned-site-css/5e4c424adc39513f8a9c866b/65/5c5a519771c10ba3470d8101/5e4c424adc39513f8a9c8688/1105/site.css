@@ -272,19 +272,66 @@ div.slideshow
 	height: var(--slideshow-height);
 }
 
+div.slideshow .controller
+{
+	display: none;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 11;
+    --padding-bottom-right: 9px;
+    padding-right: var(--padding-bottom-right);
+    padding-bottom: var(--padding-bottom-right);
+}
+
+body.images-ready div.slideshow .controller
+{
+	display: block;
+}
+
+div.slideshow .controller .controller-button 
+{
+    color: #FFF;
+    font-size: 20px;
+    padding: 5px 9px;
+    cursor: pointer;
+    display: none;
+}
+
+div.slideshow .controller .controller-button:hover 
+{
+	opacity: 0.6;
+}
+
+div.slideshow[data-playing="0"] .controller .controller-button.play,
+div.slideshow[data-playing="1"] .controller .controller-button.pause
+{
+	display: block;
+} 
+
 div.slideshow .key
 {
 	display: none;
-	--dot-size: 17px;
+	--dot-size: 14px;
 	position: absolute;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	/* width: calc(var(--dot-size) * 2.3); */
+	/*
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	height: calc(var(--dot-size) * 2.3);
+	*/
 	z-index: 10;
+	/*
 	flex-direction: row;	
 	justify-content: flex-end;
 	padding-right: calc(var(--dot-size) * 1.5);
+	*/
+	flex-direction: column;	
+	justify-content: center;	
 }
 
 body.images-ready div.slideshow .key
@@ -299,7 +346,18 @@ div.slideshow .key .dot
 	height: var(--dot-size);
 	border-radius: var(--dot-size);
 	background-color: #FFF;
-	transition: background-color var(--slideshow-durations-slide-actual);
+	transition: background-color calc(var(--slideshow-durations-slide-actual)*0.5);	
+}
+
+div.slideshow .key .dot-wrapper
+{
+	cursor: pointer;
+	padding: 6px 15px;
+}
+
+div.slideshow .key .dot-wrapper:hover .dot
+{
+	opacity: 0.6;
 }
 
 body.images-ready div.slideshow[data-index="0"] .key .dot0,
@@ -311,7 +369,9 @@ body.images-ready div.slideshow[data-index="2"] .key .dot2
 
 div.slideshow .key .spacer
 {
-	width: calc(var(--dot-size) / 1);
+	/* width: calc(var(--dot-size) / 1); */
+	/* height: calc(var(--dot-size) / 1); */
+	height: 0px;
 }
 
 div.slideshow .actual
@@ -448,6 +508,7 @@ div.slideshow .actual .slide1 .info .text
 {
 	/* text-shadow: 2px 2px 4px rgb(0 0 0 / 25%); */
 	/* text-shadow:  none; */
+	text-shadow: 0 0 3px #4a4949;
 } 
 div.slideshow .actual .slide1 .info .button {}
 

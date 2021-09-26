@@ -31,6 +31,7 @@
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,700;0,800;1,500;1,700">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+<link href="resources/fonts/font-awesome/css/fontello.css" rel="stylesheet">
 <script type="text/javascript" src="//assets.squarespace.com/@sqs/polyfiller/1.2.2/legacy.js" crossorigin="anonymous" nomodule defer></script>
 <script type="text/javascript" src="//assets.squarespace.com/@sqs/polyfiller/1.2.2/modern.js" crossorigin="anonymous" defer></script><script type="text/javascript">SQUARESPACE_ROLLUPS = {};</script>
 <script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/moment-js-vendor-26ddeab7fa5f90b6c8cb3-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-moment_js_vendor');</script>
@@ -179,17 +180,20 @@
     const slideShowResetTimeout = () => 
     {
         slideShowCancelTimeout();
-        currentTimeoutHnd = setTimeout(() => 
+        const next = () => 
         {
             const slideIndex = getCurrentSlideShowIndex();
-            setCurrentSlideShowIndex((slideIndex+1)%slideCount);            
-        },slideShowIntervalSeconds*1000);
+            setCurrentSlideShowIndex((slideIndex+1)%slideCount);
+            currentTimeoutHnd = setTimeout(next,slideShowIntervalSeconds*1000);
+        };
+        currentTimeoutHnd = setTimeout(next,slideShowIntervalSeconds*1000);
     };
 
     const playSlideShow = () => 
     {
         if (slideShowIsPlaying) return;
         slideShowIsPlaying = true;
+        document.querySelector("div.slideshow").dataset.playing = 1;
         setCurrentSlideShowIndex(0);
         slideShowResetTimeout();
     };
@@ -197,6 +201,7 @@
     {
         if (!slideShowIsPlaying) return;
         slideShowIsPlaying = false;
+        document.querySelector("div.slideshow").dataset.playing = 0;
         slideShowCancelTimeout();
     };
     const setSlideShow = (index) => 
@@ -389,7 +394,8 @@
         console.log("window loaded");
         incEventCount();
         incImagesEventCount();
-        runSlideShow();
+        // runSlideShow();
+        playSlideShow();
     }
 
     const applyRatio = (range,ratio) => range.before+((range.after-range.before)*ratio);
@@ -1278,13 +1284,21 @@
 
       <main id="page" class="container" role="main">
 
-        <div class="slideshow" data-index="0">
+        <div class="slideshow" data-index="0" data-playing="0">
+            <div class="controller">
+                <div class="controller-button play" onclick="playSlideShow()"><i class="icon-play"></i></div>
+                <div class="controller-button pause" onclick="pauseSlideShow()"><i class="icon-pause"></i></div>
+            </div>
             <div class="key">
-                <div class="dot dot0"></div>
-                <div class="spacer"></div>
-                <div class="dot dot1"></div>
-                <div class="spacer"></div>
-                <div class="dot dot2"></div>
+                <div class="dot-wrapper" onclick="setSlideShow(0)">
+                  <div class="dot dot0"></div>
+                </div>
+                <div class="dot-wrapper" onclick="setSlideShow(1)">
+                  <div class="dot dot1"></div>
+                </div>
+                <div class="dot-wrapper" onclick="setSlideShow(2)">
+                  <div class="dot dot2"></div>
+                </div>
             </div>
             <div class="actual">
                 <div class="slide slide0">
