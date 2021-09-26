@@ -340,7 +340,8 @@
     loadImages({
         "slideshow-slide1": "resources/slideshow/slide1.jpg",
         "slideshow-slide2": "resources/slideshow/slide2.jpg",
-        "slideshow-slide3": "resources/slideshow/slide3.jpg"
+        "slideshow-slide3": "resources/slideshow/slide3.jpg",
+        "image-override-thrive": "resources/others/thrive.jpg"
     },(ratio) => 
     {
         displayProgress((ratio*99)/100);        
@@ -1644,8 +1645,12 @@
   data-animation-override
 
           >
-            <noscript><img src="./images.squarespace-cdn.com/content/v1/5e4c424adc39513f8a9c866b/1588862458508-GRDBMRB0D6R0BKAQYR0A/Stocksy_comp_1921791.jpg" alt="We’re here to help you thrive - SACCO is a Savings and credit cooperative society formally registered in 19** with a growing membership of over 10,000 members pooled from the Judiciary, AG chambers, various Government Ministries, Business persons and anyone above the age of 18 years with an income." loading="lazy"/></noscript>
-            <img data-component-key="idv1.i.5eb41df80ba7a95f5b093cda" data-src="./images.squarespace-cdn.com/content/v1/5e4c424adc39513f8a9c866b/1588862458508-GRDBMRB0D6R0BKAQYR0A/Stocksy_comp_1921791.jpg" data-image="./images.squarespace-cdn.com/content/v1/5e4c424adc39513f8a9c866b/1588862458508-GRDBMRB0D6R0BKAQYR0A/Stocksy_comp_1921791.jpg" data-image-dimensions="2500x3333" data-image-focal-point="0.5,0.5" alt="Stocksy_comp_1921791.jpg"  loading="lazy"/>
+            <noscript>            
+            <img src="resources/blanks/thrive.png" alt="We’re here to help you thrive - SACCO is a Savings and credit cooperative society formally registered in 19** with a growing membership of over 10,000 members pooled from the Judiciary, AG chambers, various Government Ministries, Business persons and anyone above the age of 18 years with an income." loading="lazy"/></noscript>
+            <div class="image-override thrive">
+              <img id="image-override-thrive" src=""></img>
+            </div>
+            <img data-component-key="idv1.i.5eb41df80ba7a95f5b093cda" data-src="resources/blanks/thrive.png" data-image="resources/blanks/thrive.png" data-image-dimensions="2500x3333" data-image-focal-point="0.5,0.5" alt="thrive.png"  loading="lazy"/>
             <div class="image-overlay"></div>
           
             </div>
