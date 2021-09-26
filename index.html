@@ -27,6 +27,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="description" content="" />
 <link rel="preconnect" href="https://images.squarespace-cdn.com">
+<script>history.scrollRestoration = "manual"</script>
 <script type="text/javascript" src="//use.typekit.net/ik/VOMdZXImHY1JM18jWEFGVi9vwHWuUOdHgrw5COHbTywfezC2fFHN4UJLFRbh52jhWDm8FewXwRsyZewD5Q9UwhjtjQ8R52jhjy7gMkG0jAFu-WsoShFGZAsude80ZkoRdhXCHKoyjamTiY8Djhy8ZYmC-Ao1Oco8if37OcBDOcu8OfG0Za4ziai8de3lZemldkoDSWmyScmDSeBRZPoRdhXCHKoDSWmyScmDSeBRZPoRdhXCHKoDSWmyScmDSeBRZWFR-emqiAUTdcS0jhNlOeBRiA8XpWFR-emqiAUTdcS0jhNlOeBRiA8XpWFR-emqiAUTdcS0dcmXOeBDOcu8OeikdaiaZAUCOAs8dAv0SaBujW48Sagyjh90jhNlOeUzjhBC-eNDifUDSWmyScmDSeBRZPoRdhXCSaBujW48SagyjhmDjhy8ZYmC-Ao1OcFzdPUaiaS0jAFu-WsoShFGZAsude80ZkoRdhXCiaiaOcBRiA8XpWFR-emqiAUTdcS0dcmXOYiaikoySkolZPUaiaS0Za4ziai8de3lZemldkoDSWmyScmDSeBRZPoRdhXCiaiaO1FUiABkZWF3jAF8ShFGZAsude80ZkoRdhXKeAo8iA9l-eBySku1ScNXZWFnOAsTSagCjWq7f6RJlMJbMg6BJMJ7f6RwlMJbMg6YJMJ7f6R4lMJbMg6VJMJ7f6RFlMJbMg6sJMHbMjzv7zXB.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,500;0,700;0,800;1,500;1,700">
@@ -211,24 +212,47 @@
         if (slideShowIsPlaying) slideShowResetTimeout();
     };
 
-    const runSlideShow = () => 
+    let progressDisplayer = null;
+    let progressCtx = null;
+    let percElem = null;
+
+    const drawProgressArc = (ratio) =>
     {
-        const slideshowElem = document.querySelector("div.slideshow");
-        let slideIndex = 0;
-        let slideCount = 3;
-        let intervalSeconds = 9;
-        let interval = setInterval(() => 
-        {
-            slideIndex = (slideIndex+1)%slideCount;
-            slideshowElem.dataset.index = slideIndex;
-        },intervalSeconds*1000);
+        if (!progressCtx) return;
+        let ctx = progressCtx;
+        let canvas = ctx.canvas;
+        ctx.beginPath();
+        ctx.arc(canvas.width/2,canvas.height/2,canvas.width/2-ctx.lineWidth/2,0.75*2*Math.PI,(ratio+0.75)*2*Math.PI);
+        ctx.stroke();
+    }                    
+
+    const ensureProgressCtx = () => 
+    {
+        if (progressCtx!=null) return true;
+        let canvas = document.querySelector("#loader .progress");
+        if (!canvas) return false;
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;            
+        let ctx = canvas.getContext("2d");
+        progressCtx = ctx;
+        ctx.strokeStyle = "#dddddd";
+        ctx.lineWidth = 8;
+        drawProgressArc(1);         
+        ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue("--theme-light-blue");
+        return true;
     };
 
-    let progressDisplayer = null;
+    const ensurePercElem = () => 
+    {
+        if (percElem) return true;
+        percElem = document.querySelector("#loader .percentage");
+        return percElem?true:false;
+    };
 
     const displayProgress = (ratio) => 
     {
-        if (progressDisplayer) progressDisplayer(ratio);
+        if (ensureProgressCtx()) drawProgressArc(ratio);
+        if (ensurePercElem()) percElem.innerHTML = Math.floor(ratio*100)+"%";
     };
 
     const waitForElements = (selectors,cb) => 
@@ -255,78 +279,32 @@
 
     const isDesktopEnabled = () => (getComputedStyle(document.documentElement).getPropertyValue("--desktop-enabled")==1);
 
-    const positionProgress = () => 
-    {
-        waitForElements(["#loader .container"],() => 
-        {
-            const containerElem = document.querySelector("#loader .container");
-
-            const calculteTop = () => 
-            {
-                const headerHeight = document.querySelector(isDesktopEnabled()?".desktop-header":"header").offsetHeight;
-                const viewPortHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-                let containerHeight = getComputedStyle(containerElem).getPropertyValue("--size");
-                containerHeight = parseInt(containerHeight.substr(0,containerHeight.length-2));            
-                return ((viewPortHeight-headerHeight-containerHeight)/2);
-            };
-
-            const updateTop = () => 
-            {
-                containerElem.style.marginTop = calculteTop()+"px";
-                containerElem.style.display = "block";
-            };
-
-            updateTop();
-
-            window.addEventListener('resize',updateTop);
-
-            const drawProgressArc = (ctx,p) =>
-            {
-                let canvas = ctx.canvas;
-                ctx.beginPath();
-                ctx.arc(canvas.width/2,canvas.height/2,canvas.width/2-ctx.lineWidth/2,0.75*2*Math.PI,(p+0.75)*2*Math.PI);
-                ctx.stroke();
-            }                
-
-            let canvas = document.querySelector("#loader .progress");
-            let percElem = document.querySelector("#loader .percentage");
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            let ctx = canvas.getContext("2d");
-            ctx.strokeStyle = "#dddddd";
-            ctx.lineWidth = 8;
-            drawProgressArc(ctx,1);         
-            ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue("--theme-light-blue");
-
-            progressDisplayer = (ratio) => 
-            {
-                drawProgressArc(ctx,ratio);
-                percElem.innerHTML = Math.floor(ratio*100)+"%";
-            };
-        });
-    };
-
+    waitForElements(["#loader .container .progress"],() => 
+    {        
+        let canvas = document.querySelector("#loader .container .progress");
+        ensureProgressCtx();
+        document.body.classList.add("loader-ready");
+    });
 </script>
 <script>
-    positionProgress();
+    window.scrollTo(0,0);
 
     let eventCount = 0;
-    let imagesEventCount = 0;
 
     const incEventCount = () => 
     {
         eventCount++;
-        if (eventCount==3) document.body.classList.add("header-ready");
-    };
-
-    const incImagesEventCount = () => 
-    {
-        imagesEventCount++;
-        if (imagesEventCount==2) 
-        // if (imagesEventCount==1) 
-        {
-            displayProgress(1);
-            setTimeout(() => document.body.classList.add("images-ready"),100);
+        if (eventCount==4) 
+        {   
+            const screenWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            document.documentElement.style.setProperty("--loader-width",screenWidth+"px");
+            document.body.classList.add("app-pre-ready");
+            const appReadyWaitSeconds = 0.4;
+            setTimeout(() => 
+            {
+                document.body.classList.add("app-ready");
+                playSlideShow();                
+            },appReadyWaitSeconds*1000);
         }
     };
 
@@ -370,10 +348,10 @@
         .then((res) => 
         {
             showCompletedImages(res);
-            incImagesEventCount();
+            incEventCount();
         },() => 
         {
-            incImagesEventCount();
+            incEventCount();
         });
 
     const font = new FontFaceObserver('Roboto',{weight: 400});
@@ -392,10 +370,7 @@
     function windowLoaded()
     {
         console.log("window loaded");
-        incEventCount();
-        incImagesEventCount();
-        // runSlideShow();
-        playSlideShow();
+        incEventCount();        
     }
 
     const applyRatio = (range,ratio) => range.before+((range.after-range.before)*ratio);
@@ -1326,13 +1301,14 @@
                     </div>
                 </div>
             </div>           
-            <div id="loader">
-                <div class="container">
-                    <canvas class="progress"></canvas>
-                    <div class="percentage">0%</div>
-                </div>
-            </div>             
         </div>
+        <div id="loader">
+            <div class="container">
+                <canvas class="progress"></canvas>
+                <div class="percentage">0%</div>
+            </div>
+        </div>             
+
         
         <article class="sections" data-page-sections="5e4c46be0723454c6b11fb1c" id="sections">  
   
