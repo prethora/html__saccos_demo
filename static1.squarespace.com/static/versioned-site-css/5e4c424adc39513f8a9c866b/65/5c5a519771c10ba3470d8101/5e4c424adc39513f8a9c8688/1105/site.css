@@ -1081,9 +1081,21 @@ html body #learn-more-button
     	--font-size: 5.2vw;
 	}
 
+	
+	html body div.slideshow .actual .slide0 .info .text 
+	{
+		/*
+		text-shadow: none;
+		color: #797979;
+		*/
+	}
+
 	html body div.slideshow .actual .slide1 .info .text 
 	{
-    	text-shadow: 0 0 3px #3c3c3c;
+		/*
+    	text-shadow: none;
+    	color: #757575;
+    	*/
 	}	
 
     html body section[data-section-id="5e4c46ce9acc280f291db552"]
