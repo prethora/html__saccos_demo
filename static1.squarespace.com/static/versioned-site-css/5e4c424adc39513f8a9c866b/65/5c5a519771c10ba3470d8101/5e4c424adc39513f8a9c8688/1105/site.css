@@ -280,9 +280,12 @@ img.header-menu-logo
 	opacity: 1;
 }
 
-.header-nav-item a.preSlide.slideIn:hover
+@media (hover:hover)
 {
-	color: #315384;	
+	.header-nav-item a.preSlide.slideIn:hover
+	{
+		color: #315384;	
+	}	
 }
 
 .desktop-header
@@ -349,9 +352,12 @@ div.slideshow .controller .controller-button
     display: none;
 }
 
-div.slideshow .controller .controller-button:hover 
+@media (hover:hover)
 {
-	opacity: 0.6;
+	div.slideshow .controller .controller-button:hover 
+	{
+		opacity: 0.6;
+	}	
 }
 
 div.slideshow[data-playing="0"] .controller .controller-button.play,
@@ -409,9 +415,12 @@ div.slideshow .key .dot-wrapper
 	padding: 6px 15px;
 }
 
-div.slideshow .key .dot-wrapper:hover .dot
+@media (hover:hover)
 {
-	opacity: 0.6;
+	div.slideshow .key .dot-wrapper:hover .dot
+	{
+		opacity: 0.6;
+	}	
 }
 
 body.app-ready div.slideshow[data-index="0"] .key .dot0
@@ -496,7 +505,7 @@ div.slideshow .actual .slide .info .text
 
 .actual .slide .info .text span
 {
-	width: 500px;
+	/* width: 36.6vw; */
 	display: inline-block;
 }
 
@@ -692,8 +701,33 @@ div.slideshow .slide img
 	object-position: center top;
 }
 
+.desktop-header,.header-mover
+{
+	visibility: hidden;
+	transform: translateY(-100%);
+	transition-property: opacity,visibility,transform;
+	transition-duration: 0.4s;
+	transition-delay: 0.2s;
+}
+
+body.app-pre-ready .desktop-header,body.app-pre-ready .header-mover
+{
+	visibility: visible;
+	transform: translateY(0px);		
+}
+
 @media only screen and (pointer: coarse) and (min-width: 1025px), screen and (min-width: 800px)
 {
+	html body #block-yui_3_17_2_1_1584540174283_47589
+	{
+		height: 4px;
+	}
+
+	html body #learn-more-button
+	{
+		margin-top: 26px;
+	}
+
 	html body div.slideshow
 	{
 		margin-top: var(--desktop-header-height-before);
@@ -806,13 +840,6 @@ div.slideshow .slide img
 
 	.desktop-header
 	{
-		opacity: 1;
-		visibility: hidden;
-		transform: translateY(-100%);
-		transition-property: opacity,visibility,transform;
-		transition-duration: 0.4s;
-		transition-delay: 0.2s;
-
 		display: block;
 		position: fixed;
 		top: 0px;	
@@ -826,13 +853,6 @@ div.slideshow .slide img
 		flex-direction: row;
 		justify-content: space-between;
 		box-shadow: var(--desktop-header-box-shadow);
-	}
-
-	body.app-pre-ready .desktop-header
-	{
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0px);		
 	}
 
 	.desktop-header .back
@@ -924,9 +944,12 @@ div.slideshow .slide img
 		font-size: var(--desktop-header-links-font-size);
 	}
 
-	.desktop-header .pages .action:hover span,.desktop-header .actions .action:hover a
+	@media (hover:hover)
 	{
-		color: var(--desktop-header-links-hover-color);
+		.desktop-header .pages .action:hover span,.desktop-header .actions .action:hover a
+		{
+			color: var(--desktop-header-links-hover-color);
+		}		
 	}
 
 	.desktop-header .pages .action .menu
@@ -943,10 +966,13 @@ div.slideshow .slide img
 		border: 1px solid var(--border-color);
 	}
 
-	.desktop-header .pages .action:hover .menu
+	@media (hover:hover)
 	{
-		visibility: visible;
-		opacity: 1;
+		.desktop-header .pages .action:hover .menu
+		{
+			visibility: visible;
+			opacity: 1;
+		}		
 	}
 
 	.desktop-header .pages .action .menu .item
@@ -957,10 +983,13 @@ div.slideshow .slide img
 		font-size: 14px;
 	}
 
-	.desktop-header .pages .action .menu .item:hover
+	@media (hover:hover)
 	{
-		background-color: #dedede;
-		color: #464646;
+		.desktop-header .pages .action .menu .item:hover
+		{
+			background-color: #dedede;
+			color: #464646;
+		}		
 	}
 
 	.desktop-header .pages .action .menu .item:not(.last)
@@ -996,10 +1025,91 @@ div.slideshow .slide img
     	font-size: 14px;
 	}
 
-	.desktop-header .actions .action a.button:hover
+	@media (hover:hover)
 	{
-		opacity: 0.8;
+		.desktop-header .actions .action a.button:hover
+		{
+			opacity: 0.8;
+		}		
 	}
+
+    html body section[data-section-id="5e4c46ce9acc280f291db552"]
+    {
+    	margin-top: 20px;
+    	margin-bottom: -30px;
+    }	
 }
 
+@media only screen and (pointer: coarse) and (max-width: 1024px), screen and (max-width: 799px)
+{
 
+	html body .actual .slide .info .text span 
+	{
+    	/* width: 321px; */
+	}
+
+	html body div.slideshow .actual .slide .info .title 
+	{
+	    font-size: 51px;
+	    line-height: 57px;
+	    margin-left: -4px;
+	}
+
+	html body div.slideshow .actual .slide .info 
+	{
+    	--padding-left-right: 46px;
+    	padding-left: var(--padding-left-right);
+    	padding-right: var(--padding-left-right);
+    	padding-top: 143px;
+	}
+
+	html body div.slideshow .actual .slide.slide1 .info 
+	{
+		padding-top: 80px;	
+	}
+
+	html body div.slideshow .actual .slide.slide2 .info 
+	{
+		padding-top: 163px;	
+	}
+
+	html body div.slideshow .actual .slide .info .text 
+	{
+    	font-size: var(--font-size);
+    	line-height: calc(var(--font-size) * 1.5);
+    	margin-top: 37px;
+    	--font-size: 5.2vw;
+	}
+
+	html body div.slideshow .actual .slide1 .info .text 
+	{
+    	text-shadow: 0 0 3px #3c3c3c;
+	}	
+
+    html body section[data-section-id="5e4c46ce9acc280f291db552"]
+    {
+    	margin-top: -71px;
+    	z-index: -100;
+    }
+
+	html body div.slideshow .key 
+	{
+		--dot-size: 12px;
+		left: 0px;
+	    right: 0px;	    
+	    bottom: 0px;
+	    top: auto;
+	    flex-direction: row;
+	}    
+
+	html body div.slideshow .key .dot-wrapper 
+	{
+    	padding: 15px 6px;
+    	-webkit-tap-highlight-color: transparent;
+	}	
+
+	html body div.slideshow .controller, html body div.slideshow .controller *
+	{
+    	-webkit-tap-highlight-color: transparent;
+	}	
+}
