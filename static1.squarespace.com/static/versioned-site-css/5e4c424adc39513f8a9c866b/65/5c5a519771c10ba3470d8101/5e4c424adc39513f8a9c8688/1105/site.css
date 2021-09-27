@@ -491,7 +491,7 @@ div.slideshow .actual .slide .info .text
     color: #FFFF;
     width: 100%;
     font-weight: 500;
-    line-height: 38px;
+    line-height: 47px;
     margin-top: 37px;
     padding-left: 0px;
     text-shadow: 2px 2px 4px rgb(0 0 0 / 27%);
@@ -708,6 +708,12 @@ div.slideshow .slide img
 	transition-property: opacity,visibility,transform;
 	transition-duration: 0.4s;
 	transition-delay: 0.2s;
+}
+
+html body.initial-animation-complete .header-mover
+{
+	transform: none;
+	transition-property: opacity,visibility;
 }
 
 body.app-pre-ready .desktop-header,body.app-pre-ready .header-mover
@@ -1123,5 +1129,8 @@ html body #learn-more-button
 	html body div.slideshow .controller, html body div.slideshow .controller *
 	{
     	-webkit-tap-highlight-color: transparent;
-	}	
+	}
+
+
+
 }
