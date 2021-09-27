@@ -716,16 +716,16 @@ body.app-pre-ready .desktop-header,body.app-pre-ready .header-mover
 	transform: translateY(0px);		
 }
 
+html body #learn-more-button
+{
+	margin-top: 26px;
+}
+
 @media only screen and (pointer: coarse) and (min-width: 1025px), screen and (min-width: 800px)
 {
 	html body #block-yui_3_17_2_1_1584540174283_47589
 	{
 		height: 4px;
-	}
-
-	html body #learn-more-button
-	{
-		margin-top: 26px;
 	}
 
 	html body div.slideshow
