@@ -472,7 +472,7 @@ div.slideshow .actual .slide .info
 div.slideshow .actual .slide .info .title 
 {
     font-size: 71px;
-    line-height: 77px;
+    line-height: 79px;
     font-weight: bold;
     color: #355686;
     margin-left: -4px;
@@ -1057,7 +1057,7 @@ html body #learn-more-button
 	html body div.slideshow .actual .slide .info .title 
 	{
 	    font-size: 51px;
-	    line-height: 57px;
+	    line-height: 60px;
 	    margin-left: -4px;
 	}
 
@@ -1104,6 +1104,11 @@ html body #learn-more-button
     	*/
 	}	
 
+	html body div.slideshow .actual .slide1 img
+	{
+    	object-position: 56% top;
+	}		
+
     html body section[data-section-id="5e4c46ce9acc280f291db552"]
     {
     	margin-top: -71px;
@@ -1131,6 +1136,8 @@ html body #learn-more-button
     	-webkit-tap-highlight-color: transparent;
 	}
 
-
-
+	:root
+	{
+		--mobile-enabled: 1;
+	}
 }
