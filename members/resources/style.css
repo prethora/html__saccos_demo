@@ -415,6 +415,7 @@ body #main-panel .under-construction-panel
 	opacity: 1;
 	transform: scale(1);
 	/* box-shadow: 0px 1px 7px 1px rgb(0 0 0 / 10%); */
+	border: 1px solid #d4d4d4;
 }
 
 #main-panel .dashboard-panel .dotted-border
